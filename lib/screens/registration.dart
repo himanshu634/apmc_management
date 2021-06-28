@@ -19,12 +19,17 @@ class _RegistrationState extends State<Registration> {
   var _isSubmitting = false;
 
   void _onSubmit() {
+    FocusScope.of(context).unfocus();
     final _isValid = _formKey.currentState!.validate();
     if (_isValid) {
-      _formKey.currentState!.save();
       setState(() {
-        _isSubmitting = !_isSubmitting;
+        _isSubmitting = true;
       });
+      _formKey.currentState!.save();
+      
+      print(_personName);
+      print(_villageName);
+      print(_mobileNumber);
       //TODO: Add submitting logic
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
