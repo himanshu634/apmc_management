@@ -6,6 +6,7 @@ import '../widgets/registratin_form.dart';
 // import '../constants/const_colors.dart';
 
 class Registration extends StatelessWidget {
+  static const id = '/registration';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

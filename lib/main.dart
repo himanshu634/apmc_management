@@ -10,8 +10,7 @@ import './screens/home.dart';
 void main() {
   //TODO: learn otp authentication
   //TODO: define data-flow
-  //TODO: connect firebase with app
-  //TODO: create home-screen
+  //TODO: define data structures
   runApp(MyApp());
 }
 
@@ -24,12 +23,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFF4DD637, customColor),
         accentColor: Colors.black,
-        // primaryColor: Color(0xFF4DD637)
-        // buttonColor:
       ),
-      home: Registration(),
+      home: Login(),
       routes: {
         Login.id: (ctx) => Login(),
+        Registration.id: (ctx) => Registration(),
         Home.id: (ctx) => Home(),
       },
     );
