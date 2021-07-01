@@ -31,28 +31,28 @@ class News extends ChangeNotifier {
         });
       });
     } catch (error) {
-      print(error);
+      throw error;
     }
-    notifyListeners();
+    // notifyListeners();
   }
 
-  Future<void> pushData() async {
-    try {
-      print("we are pushing data");
-      final firebaseApp = await Firebase.initializeApp();
-      print(firebaseApp.name);
-      final firebase = FirebaseFirestore.instance;
-      print("we are going to push date");
-      firebase.collection('news')
-        ..add({
-          'headline': "Market crashed",
-          'description': "Harshad maheta exposed by reporter.",
-          'date': DateTime.now().toIso8601String(),
-          'imageLink':
-              'https://upload.wikimedia.org/wikipedia/commons/7/73/Harshad_Mehta.jpg',
-        });
-    } catch (error) {
-      print(error);
-    }
-  }
+  // Future<void> pushData() async {
+  //   try {
+  //     print("we are pushing data");
+  //     final firebaseApp = await Firebase.initializeApp();
+  //     print(firebaseApp.name);
+  //     final firebase = FirebaseFirestore.instance;
+  //     print("we are going to push date");
+  //     firebase.collection('news')
+  //       ..add({
+  //         'headline': "Market crashed",
+  //         'description': "Harshad maheta exposed by reporter.",
+  //         'date': DateTime.now().toIso8601String(),
+  //         'imageLink':
+  //             'https://upload.wikimedia.org/wikipedia/commons/7/73/Harshad_Mehta.jpg',
+  //       });
+  //   } catch (error) {
+  //     print(error);
+  //   }
+  // }
 }
