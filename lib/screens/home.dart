@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/navigation_bar/news_bar.dart';
-import '../widgets/navigation_bar/vendors_bar.dart';
 import '../widgets/navigation_bar/price_list_bar.dart';
 import '../widgets/navigation_bar/slot_booking_bar.dart';
 import '../widgets/navigation_bar/user_bar.dart';
+import '../providers/news.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
@@ -14,13 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var screens = [
-    NewsBar(),
-    VendorsBar(),
-    SlotBookingBar(),
-    PriceListBar(),
-    UserBar()
-  ];
+  var screens = [NewsBar(), PriceListBar(), SlotBookingBar(), UserBar()];
   var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +24,10 @@ class _HomeState extends State<Home> {
         title: const Text("APMC"),
         centerTitle: true,
       ),
-      body: screens[_currentIndex],
+      body: ChangeNotifierProvider(
+        create: (ctx) => News(),
+        child: screens[_currentIndex],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
@@ -56,23 +54,21 @@ class _HomeState extends State<Home> {
           type: BottomNavigationBarType.shifting,
           items: [
             BottomNavigationBarItem(
-              icon: const Icon(Icons.pending),
+              icon: const Icon(
+                Icons.article,
+              ),
               label: "News",
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.pending),
-              label: "Vendors",
+              icon: const Icon(Icons.yard_rounded),
+              label: "Prices",
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.pending),
-              label: "Book",
+              icon: const Icon(Icons.receipt_long_rounded),
+              label: "Booking",
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.pending),
-              label: "Price",
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.pending),
+              icon: const Icon(Icons.person),
               label: "User",
             ),
           ],

@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFF4DD637, customColor),
         accentColor: Colors.black,
+        backgroundColor: Color(0xFFeffdef),
       ),
       home: Login(),
       routes: {

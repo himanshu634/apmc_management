@@ -82,7 +82,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Enter your name here",
+              labelText: "Enter Your Name",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
