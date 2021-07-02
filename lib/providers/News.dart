@@ -23,17 +23,19 @@ class News extends ChangeNotifier {
           .get();
       data.docs.forEach((element) {
         // print(element.data()['date']);
+        // print(element.data()['date']);
+        var item = element.data();
         _items.add({
-          'headline': element.data()['headline'],
-          'description': element.data()['description'],
-          'date': DateTime.parse(element.data()['date']),
-          'imageLink': element.data()['imageLink'],
+          'headline': item['headline'],
+          'description': item['description'],
+          'date': DateTime.parse(item['date']),
+          'imageLink': item['imageLink'],
         });
       });
     } catch (error) {
       throw error;
     }
-    // notifyListeners();
+    notifyListeners();
   }
 
   // Future<void> pushData() async {

@@ -5,8 +5,6 @@ class UserBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('user'),
-    );
+    return Center(child: Text("Heloo"));
   }
 }

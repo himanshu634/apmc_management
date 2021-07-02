@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
         title: const Text("APMC"),
         centerTitle: true,
       ),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: ChangeNotifierProvider(
         create: (ctx) => News(),
         child: screens[_currentIndex],
