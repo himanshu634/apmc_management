@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:provider/provider.dart';
+
+import 'commodity_selector.dart';
+import '../../providers/commodity_detail.dart';
 
 class SlotBookingWidget extends StatefulWidget {
   @override
@@ -8,34 +12,57 @@ class SlotBookingWidget extends StatefulWidget {
 
 class _SlotBookingWidgetState extends State<SlotBookingWidget> {
   String? _name;
-  String? _product;
-  String? _quantity;
+  String? _commodity;
+  int? _quantity;
   String? _aadharCardNumber;
   String? _mobileNumber;
   DateTime? _selectedDate;
+  late List<Map<String, dynamic>> commodityItems;
 
   var _formKey = GlobalKey<FormState>();
 
-  void _selectDate() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1999),
-      lastDate: DateTime(2022),
-    ).then((_date) {
-      if (_date == null) {
-        return;
-      } else {
-        setState(() {
-          _selectedDate = _date;
-        });
-      }
+  void _selectCommodity(String value) {
+    Navigator.of(context).pop();
+    setState(() {
+      _commodity = value;
     });
   }
 
+  void _selectDate() {
+    if (_commodity != null) {
+      Map<String, dynamic> commodityItem =
+          commodityItems.firstWhere((element) => element['name'] == _commodity);
+      showDatePicker(
+        context: context,
+        initialDate: commodityItem['start_date'],
+        firstDate: commodityItem['start_date'],
+        lastDate: commodityItem['end_date'],
+      ).then((_date) {
+        if (_date == null) {
+          return;
+        } else {
+          setState(() {
+            _selectedDate = _date;
+          });
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Select Commodity first!!",
+            style: TextStyle(
+              color: Theme.of(context).errorColor,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+//TODO data sending to server is pending
   void _onSubmit() {
     bool _isValidate = _formKey.currentState!.validate();
-
     if (_isValidate && _selectedDate != null) {
       _formKey.currentState!.save();
     } else if (_selectedDate == null) {
@@ -71,6 +98,8 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    commodityItems = Provider.of<CommodityDetail>(context).items;
+
     //#This is Date Selcter
     Widget _buildDateSelecter() => InkWell(
           onTap: _selectDate,
@@ -163,7 +192,6 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  autofocus: true,
                   validator: (val) {
                     if (val == null || val.isEmpty)
                       return "Please enter your name.";
@@ -182,25 +210,9 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
                   ),
                 ),
               ),
-              //TODO commodity selection to be done
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  validator: (val) {
-                    if (val == null || val.isEmpty)
-                      return "Please enter a comodity name.";
-                  },
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _product = val,
-                  textInputAction: TextInputAction.next,
-                  scrollPadding: const EdgeInsets.only(bottom: 100),
-                  decoration: InputDecoration(
-                    labelText: "Enter Comodity Name",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
+              CommoditySelector(
+                onSelect: _selectCommodity,
+                commodityName: _commodity,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -211,11 +223,11 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
                     if (int.parse(val) == 0) return "Quantity can not be 0";
                   },
                   keyboardType: TextInputType.number,
-                  onSaved: (val) => _quantity = val,
+                  onSaved: (val) => _quantity = int.parse(val!),
                   textInputAction: TextInputAction.next,
                   scrollPadding: const EdgeInsets.only(bottom: 100),
                   decoration: InputDecoration(
-                    labelText: "Enter Quantity",
+                    labelText: "Enter Quantity(Kilos)",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -259,6 +271,7 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
                     }
                     return null;
                   },
+                  onEditingComplete: () => _onSubmit(),
                   keyboardType: TextInputType.number,
                   onSaved: (val) => _mobileNumber = val,
                   textInputAction: TextInputAction.done,

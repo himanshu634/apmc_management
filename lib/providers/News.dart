@@ -15,7 +15,6 @@ class News extends ChangeNotifier {
   Future<void> fetchAndSetData() async {
     // print("fetching data");
     try {
-      await Firebase.initializeApp();
       final firebase = FirebaseFirestore.instance;
       final data = await firebase
           .collection('news')

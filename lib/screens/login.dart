@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './home.dart';
 import './registration.dart';
+import 'otp_screens/otp_screen.dart';
+import './home.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
   static const id = "/login";
 
   @override
@@ -79,11 +79,18 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   //TODO: Here i have to add authentication,currently i am directing to homescreen
-                  onPressed: _isValidate
-                      ? () =>
-                          Navigator.of(context).pushReplacementNamed(Home.id)
-                      : null,
+                  
+                  // onPressed: _isValidate
+                  //     ? () => Navigator.of(context).push(
+                  //           MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 OtpScreen(_numberEditingController.text),
+                  //           ),
+                  //         )
+                  //     : null,
+                  onPressed: () => Navigator.of(context).pushReplacementNamed(Home.id),
                   child: const Text("Get OTP"),
+                  // ()=> Navigator.of(context).pushReplacementNamed(Home.id)
                 ),
               ),
             ),

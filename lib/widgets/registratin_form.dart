@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/home.dart';
+import '../screens/otp_screens/otp_screen.dart';
 
 class RegistrationForm extends StatefulWidget {
   @override
@@ -14,17 +15,18 @@ class _RegistrationFormState extends State<RegistrationForm> {
   String? _personName = '';
   final FocusNode _villageFocus = FocusNode();
   final FocusNode _numberFocus = FocusNode();
-  var _isSubmitting = false;
+  // var _isSubmitting = false;
 
   void _onSubmit() {
     FocusScope.of(context).unfocus();
     final _isValid = _formKey.currentState!.validate();
     if (_isValid) {
-      setState(() {
-        _isSubmitting = true;
-      });
+      // setState(() {
+      //   _isSubmitting = true;
+      // });
       _formKey.currentState!.save();
 
+      print('we are in onSubmit');
       print(_personName);
       print(_villageName);
       print(_mobileNumber);
@@ -134,7 +136,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) {
               _numberFocus.unfocus();
-              _onSubmit();
+              // _onSubmit();
             },
             focusNode: _numberFocus,
             validator: (value) {
@@ -169,28 +171,41 @@ class _RegistrationFormState extends State<RegistrationForm> {
             //TODO: Here disable button functionality is pending, think about it
             //TODO: Currently I am changing to direct home screen but i have add otp screen also
             //# onPressed: _onSubmit,
-            onPressed: () =>
-                Navigator.of(context).pushReplacementNamed(Home.id),
-            child: _isSubmitting
-                ? Center(
-                    child: CircularProgressIndicator.adaptive(
-                      backgroundColor: Theme.of(context).accentColor,
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Verify Mobile Number",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(width: 7),
-                      const Icon(Icons.arrow_forward),
-                    ],
+            // onPressed: () =>
+            //     Navigator.of(context).pushReplacementNamed(Home.id),
+
+            onPressed: () {
+              _onSubmit();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (ctx) => OtpScreen(
+                    mobileNumber: this._mobileNumber!,
+                    villageName: this._villageName!,
+                    userName: this._personName!,
                   ),
+                ),
+              );
+            },
+            child: //_isSubmitting
+                // ? Center(
+                //     child: CircularProgressIndicator.adaptive(
+                //       backgroundColor: Theme.of(context).accentColor,
+                //     ),
+                //   )
+                Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Verify Mobile Number",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+                const SizedBox(width: 7),
+                const Icon(Icons.arrow_forward),
+              ],
+            ),
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).primaryColor,
               onSurface: Colors.black,
