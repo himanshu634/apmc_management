@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/navigation_bar/news_bar.dart';
 import '../widgets/navigation_bar/price_list_bar.dart';
@@ -17,12 +18,21 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var screens = [NewsBar(), PriceListBar(), SlotBookingBar(), UserBar()];
   var _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("APMC"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: ChangeNotifierProvider(

@@ -1,11 +1,6 @@
-class UserData {
-  String personName;
-  String village;
-  String mobileNumber;
+import 'package:flutter/cupertino.dart';
 
-  UserData({
-    required this.mobileNumber,
-    required this.personName,
-    required this.village,
-  });
+class UserData with ChangeNotifier {
+  Map<String, dynamic> userData = {};
+ 
 }

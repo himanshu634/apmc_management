@@ -18,6 +18,7 @@ class Registration extends StatelessWidget {
       body: Center(
         child: RegistrationForm(),
       ),
+     
     );
   }
 }

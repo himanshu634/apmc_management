@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './registration.dart';
-import 'otp_screens/otp_screen.dart';
-import './home.dart';
+import 'otp_screens/otp_screen_login.dart';
 
 class Login extends StatefulWidget {
   static const id = "/login";
@@ -26,6 +26,19 @@ class _LoginState extends State<Login> {
       return false;
     }
     return true;
+  }
+
+  void _onSubmit() {
+    if (_isValidate && _numberEditingController.text.isNotEmpty) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) =>
+              OtpScreenLogin(mobileNumber: _numberEditingController.text),
+        ),
+      );
+    } else {
+      //TODO snackbar
+    }
   }
 
   @override
@@ -78,17 +91,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  //TODO: Here i have to add authentication,currently i am directing to homescreen
-                  
-                  // onPressed: _isValidate
-                  //     ? () => Navigator.of(context).push(
-                  //           MaterialPageRoute(
-                  //             builder: (context) =>
-                  //                 OtpScreen(_numberEditingController.text),
-                  //           ),
-                  //         )
-                  //     : null,
-                  onPressed: () => Navigator.of(context).pushReplacementNamed(Home.id),
+                  onPressed: _onSubmit,
                   child: const Text("Get OTP"),
                   // ()=> Navigator.of(context).pushReplacementNamed(Home.id)
                 ),

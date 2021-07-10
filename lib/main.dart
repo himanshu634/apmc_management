@@ -2,17 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './screens/registration.dart';
 import './screens/login.dart';
 import './constants/const_colors.dart';
 import './screens/home.dart';
-import 'screens/otp_screens/otp_screen.dart';
 
-void main() {
-  //TODO: Focus node in slot Booking
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -27,7 +26,15 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.black,
         backgroundColor: Color(0xFFeffdef),
       ),
-      home: Login(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, snapshot) {
+          if (snapshot.data != null)
+            return Home();
+          else
+            return Login();
+        },
+      ),
       routes: {
         Login.id: (ctx) => Login(),
         Registration.id: (ctx) => Registration(),

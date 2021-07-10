@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/home.dart';
-import '../screens/otp_screens/otp_screen.dart';
+import '../screens/otp_screens/otp_screen_registration.dart';
 
 class RegistrationForm extends StatefulWidget {
   @override
@@ -16,21 +15,22 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final FocusNode _villageFocus = FocusNode();
   final FocusNode _numberFocus = FocusNode();
   // var _isSubmitting = false;
+  var _isValid = false;
 
   void _onSubmit() {
     FocusScope.of(context).unfocus();
-    final _isValid = _formKey.currentState!.validate();
+    _isValid = _formKey.currentState!.validate();
     if (_isValid) {
-      // setState(() {
-      //   _isSubmitting = true;
-      // });
       _formKey.currentState!.save();
-
-      print('we are in onSubmit');
-      print(_personName);
-      print(_villageName);
-      print(_mobileNumber);
-      //TODO: Add submitting logic
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx) => OtpScreenRegistration(
+            mobileNumber: this._mobileNumber!,
+            villageName: this._villageName!,
+            userName: this._personName!,
+          ),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -64,8 +64,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
     Widget _buildName() => Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            // onFieldSubmitted: ,
-
             autofocus: true,
             onFieldSubmitted: (_) {
               FocusScope.of(context).unfocus();
@@ -136,7 +134,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) {
               _numberFocus.unfocus();
-              // _onSubmit();
+            },
+            onEditingComplete: () {
+              _onSubmit();
             },
             focusNode: _numberFocus,
             validator: (value) {
@@ -168,31 +168,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
           height: 50,
           width: double.infinity,
           child: ElevatedButton(
-            //TODO: Here disable button functionality is pending, think about it
-            //TODO: Currently I am changing to direct home screen but i have add otp screen also
-            //# onPressed: _onSubmit,
-            // onPressed: () =>
-            //     Navigator.of(context).pushReplacementNamed(Home.id),
-
             onPressed: () {
               _onSubmit();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (ctx) => OtpScreen(
-                    mobileNumber: this._mobileNumber!,
-                    villageName: this._villageName!,
-                    userName: this._personName!,
-                  ),
-                ),
-              );
             },
-            child: //_isSubmitting
-                // ? Center(
-                //     child: CircularProgressIndicator.adaptive(
-                //       backgroundColor: Theme.of(context).accentColor,
-                //     ),
-                //   )
-                Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -249,7 +228,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   _buildNumber(),
                   const SizedBox(height: 10),
                   _buildButton(),
-                  // const SizedBox(height: 10),
                 ],
               ),
             ),
