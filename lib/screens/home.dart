@@ -7,6 +7,7 @@ import '../widgets/navigation_bar/price_list_bar.dart';
 import '../widgets/navigation_bar/slot_booking_bar.dart';
 import '../widgets/navigation_bar/user_bar.dart';
 import '../providers/news.dart';
+import '../providers/user_data.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
@@ -35,8 +36,15 @@ class _HomeState extends State<Home> {
         ],
       ),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: ChangeNotifierProvider(
-        create: (ctx) => News(),
+      body: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (ctx) => News(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => UserData(),
+          ),
+        ],
         child: screens[_currentIndex],
       ),
       bottomNavigationBar: Container(
