@@ -8,7 +8,7 @@ import '../home.dart';
 // import '../../providers/user_data.dart';
 
 class OtpScreenRegistration extends StatefulWidget {
-  static const id = "/otp-screen";
+  static const id = "/otp-screen-registration";
   final String mobileNumber;
   final String userName;
   final String villageName;

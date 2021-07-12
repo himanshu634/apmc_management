@@ -17,39 +17,51 @@ class UserDetails extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                //TODO photo logic
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.width * .5,
-                  child: Center(
-                    child: CircleAvatar(
-                      minRadius: 20,
-                      maxRadius: 70,
-                      child: Icon(
-                        Icons.person,
-                        size: 50,
+          if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  //TODO photo logic
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.width * .5,
+                    child: Center(
+                      child: CircleAvatar(
+                        minRadius: 20,
+                        maxRadius: 70,
+                        child: Icon(
+                          Icons.person,
+                          size: 50,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                UserItem(
-                  data: userData.userData!['user_name'],
-                  dataType: "User Name",
-                ),
-                UserItem(
-                  data: userData.userData!['village_name'],
-                  dataType: "Vilage/City Name",
-                ),
-                UserItem(
-                  data: userData.userData!['mobile_number'],
-                  dataType: "Mobile Number",
-                ),
-              ],
-            ),
-          );
+                  UserItem(
+                    data: userData.userData!['user_name'],
+                    dataType: "User Name",
+                    editFunc: userData.editUserName,
+                  ),
+                  UserItem(
+                    data: userData.userData!['village_name'],
+                    dataType: "Vilage/City Name",
+                    editFunc: userData.editVillageName,
+                  ),
+                  UserItem(
+                    data: userData.userData!['mobile_number'],
+                    dataType: "Mobile Number",
+                    editFunc: userData.editMobileNumber,
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Text("something went wrong"),
+            );
+          }
+          // return Center(
+          //   child: CircularProgressIndicator(),
+          // );
         },
       ),
     );

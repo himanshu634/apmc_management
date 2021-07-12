@@ -14,6 +14,13 @@ class CommoditySelector extends StatelessWidget {
         Provider.of<CommodityDetail>(context, listen: false);
 
     showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(
+          top: const Radius.circular(
+            30,
+          ),
+        ),
+      ),
       context: context,
       builder: (ctx) {
         return Container(
