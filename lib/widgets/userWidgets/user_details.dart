@@ -1,10 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../providers/user_data.dart';
 import './user_item.dart';
 
-class UserDetails extends StatelessWidget {
+class UserDetails extends StatefulWidget {
+  @override
+  _UserDetailsState createState() => _UserDetailsState();
+}
+
+class _UserDetailsState extends State<UserDetails> {
+  File? _image;
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = File(pickedFile!.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
@@ -21,20 +38,42 @@ class UserDetails extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  //TODO photo logic
-                  Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.width * .5,
-                    child: Center(
-                      child: CircleAvatar(
-                        minRadius: 20,
-                        maxRadius: 70,
-                        child: Icon(
-                          Icons.person,
-                          size: 50,
-                        ),
+                  SingleChildScrollView(
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.width * .6,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Center(
+                            child: CircleAvatar(
+                              minRadius: 20,
+                              maxRadius: 70,
+                              child: _image == null
+                                  ? Icon(
+                                      Icons.person,
+                                      size: 50,
+                                    )
+                                  : Image.file(
+                                      _image!,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            child: Text("Take Photo"),
+                            onPressed: () async {
+                              await _pickImage();
+                            },
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.grey[500],
                   ),
                   UserItem(
                     data: userData.userData!['user_name'],
