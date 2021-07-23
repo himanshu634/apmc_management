@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_data.dart';
-import '../userWidgets/user_details.dart';
+import '../user_widgets/user_details.dart';
 
 class UserBar extends StatelessWidget {
   @override

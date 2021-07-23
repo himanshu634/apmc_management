@@ -54,18 +54,24 @@ class _UserDetailsState extends State<UserDetails> {
                                       Icons.person,
                                       size: 50,
                                     )
-                                  : Image.file(
-                                      _image!,
-                                      fit: BoxFit.cover,
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: FileImage(
+                                            _image!,
+                                            scale: 1,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                             ),
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
                             child: Text("Take Photo"),
-                            onPressed: () async {
-                              await _pickImage();
-                            },
+                            onPressed: _pickImage,
                           ),
                         ],
                       ),

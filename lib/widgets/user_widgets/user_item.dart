@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class UserItem extends StatefulWidget {
   final String data;
   final String dataType;
@@ -84,7 +83,6 @@ class _UserItemState extends State<UserItem> {
                     left: 8,
                   ),
                   child: TextField(
-                  
                     scrollPadding: const EdgeInsets.only(
                       bottom: 50,
                     ),
@@ -136,7 +134,7 @@ class _UserItemState extends State<UserItem> {
                                           context: ctx)
                                       .then(
                                     (value) {
-                                    Navigator.of(context).canPop();
+                                      Navigator.of(context).canPop();
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
