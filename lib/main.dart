@@ -12,6 +12,9 @@ import './screens/home.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  //TODO there is some improvement are pending in image_widget
+  //TODO no app check for request
+  //TODO polishing of image_widget is pending
   runApp(MyApp());
 }
 

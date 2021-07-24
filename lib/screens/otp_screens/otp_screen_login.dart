@@ -95,9 +95,7 @@ class _OtpScreenLoginState extends State<OtpScreenLogin> {
         });
       },
       codeAutoRetrievalTimeout: (verificationId) {
-        setState(() {
-          _verificationCode = verificationId;
-        });
+        //TODO Edit this
       },
       timeout: Duration(seconds: 60),
     );

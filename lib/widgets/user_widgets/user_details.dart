@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../providers/user_data.dart';
 import './user_item.dart';
+import './image_widget.dart';
 
 class UserDetails extends StatefulWidget {
   @override
@@ -13,18 +14,28 @@ class UserDetails extends StatefulWidget {
 }
 
 class _UserDetailsState extends State<UserDetails> {
-  File? _image;
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = File(pickedFile!.path);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
+    File? _image;
+
+    Future<void> _pickImage() async {
+      try {
+        final picker = ImagePicker();
+        final pickedFile = await picker.pickImage(
+          source: ImageSource.camera,
+          maxHeight: 300,
+          maxWidth: 500,
+        );
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+          await userData.addPhoto(_image!);
+        }
+      } catch (error) {
+        print(error);
+      }
+    }
+
     return SafeArea(
       child: FutureBuilder(
         future: userData.fetchAndSetUserData(),
@@ -35,46 +46,34 @@ class _UserDetailsState extends State<UserDetails> {
             );
           }
           if (snapshot.hasData) {
+            final imageLink = userData.userData!['profile_pic_link'];
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SingleChildScrollView(
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.width * .6,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          Center(
-                            child: CircleAvatar(
-                              minRadius: 20,
-                              maxRadius: 70,
-                              child: _image == null
-                                  ? Icon(
-                                      Icons.person,
-                                      size: 50,
-                                    )
-                                  : Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: FileImage(
-                                            _image!,
-                                            scale: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            child: Text("Take Photo"),
-                            onPressed: _pickImage,
-                          ),
-                        ],
-                      ),
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.width * .7,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Center(
+                          child: imageLink == null
+                              ? CircleAvatar(
+                                  minRadius: 50,
+                                  maxRadius: 70,
+                                  child: const Icon(
+                                    Icons.person,
+                                    size: 50,
+                                  ),
+                                )
+                              : ImageWidget(imageLink),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          child: Text("Take Photo"),
+                          onPressed: _pickImage,
+                        ),
+                      ],
                     ),
                   ),
                   Divider(
