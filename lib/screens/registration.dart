@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // import '../screens/home.dart';
-import '../widgets/registratin_form.dart';
+import '../widgets/registration_form.dart';
 
 // import '../constants/const_colors.dart';
 

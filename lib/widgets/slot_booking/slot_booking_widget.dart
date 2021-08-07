@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'commodity_selector.dart';
 import '../../providers/commodity_detail.dart';
+import '../../screens/otp_screens/otp_slot_book.dart';
 
 class SlotBookingWidget extends StatefulWidget {
   @override
@@ -65,6 +66,10 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
     bool _isValidate = _formKey.currentState!.validate();
     if (_isValidate && _selectedDate != null) {
       _formKey.currentState!.save();
+      showBottomSheet(
+        context: context,
+        builder: (ctx) => OtpSlotBook(_mobileNumber),
+      );
     } else if (_selectedDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -203,7 +208,7 @@ class _SlotBookingWidgetState extends State<SlotBookingWidget> {
                   keyboardType: TextInputType.name,
                   scrollPadding: const EdgeInsets.only(bottom: 100),
                   decoration: InputDecoration(
-                    labelText: "Enter Name",
+                    labelText: "Enter Your Name",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
