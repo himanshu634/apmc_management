@@ -55,35 +55,26 @@ class _ImageWidgetState extends State<ImageWidget> {
     return CircleAvatar(
       minRadius: 50,
       maxRadius: 70,
-      child:
-          // ? Center(
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: CircularProgressIndicator(
-          //         value: _percentage,
-          //       ),
-          //     ),
-          //   )
-          !_imageExists
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: _percentage,
-                    ),
-                  ),
-                )
-              : Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: FileImage(
-                        this._imageFile!,
-                      ),
-                    ),
+      child: !_imageExists
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  value: _percentage,
+                ),
+              ),
+            )
+          : Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: FileImage(
+                    this._imageFile!,
                   ),
                 ),
+              ),
+            ),
     );
   }
 }

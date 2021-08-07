@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "760218204275",
-    "project_id": "apmc-3432e",
-    "storage_bucket": "apmc-3432e.appspot.com"
+    "project_number": "428189326497",
+    "project_id": "apmc-87a41",
+    "storage_bucket": "apmc-87a41.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760218204275:android:c152c846e5b17d84c35206",
+        "mobilesdk_app_id": "1:428189326497:android:4a009a3bcc74ef6da2e4e0",
         "android_client_info": {
           "package_name": "com.frnds.apmc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "760218204275-emp5522i3t0og6eqidergk6b5mhnbt8m.apps.googleusercontent.com",
+          "client_id": "428189326497-hsohs3fj4oq1talrvhlf2guhevvo3lmr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDFGn4dyTWixfU_VOK31_t3kkbegeypBhs"
+          "current_key": "AIzaSyC2NrCrT93KDXLbAEar9CIOM50TgWcbGeo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "760218204275-emp5522i3t0og6eqidergk6b5mhnbt8m.apps.googleusercontent.com",
+              "client_id": "428189326497-hsohs3fj4oq1talrvhlf2guhevvo3lmr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
