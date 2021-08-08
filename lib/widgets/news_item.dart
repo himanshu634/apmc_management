@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../screens/news_detail_screen.dart';
+
 class NewsItem extends StatelessWidget {
   final String heading;
   final String description;
@@ -24,35 +26,45 @@ class NewsItem extends StatelessWidget {
         elevation: 7,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            title: Text(
-              heading,
-              style: TextStyle(
-                color: Colors.green[500],
+          child: InkWell(
+            child: ListTile(
+              title: Text(
+                heading,
+                style: TextStyle(
+                  color: Colors.green[500],
+                ),
               ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  description,
-                  style: TextStyle(
-                    color: Colors.grey[900],
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    description,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                    ),
                   ),
+                  Text(
+                    DateFormat.yMMMd().format(date),
+                  ),
+                ],
+              ),
+              leading: Container(
+                width: 50,
+                height: 50,
+                child: Image.network(
+                  imageLink,
+                  fit: BoxFit.cover,
                 ),
-                Text(
-                  DateFormat.yMMMd().format(date),
-                ),
-              ],
-            ),
-            leading: Container(
-              width: 50,
-              height: 50,
-              child: Image.network(
-                imageLink,
-                fit: BoxFit.cover,
               ),
             ),
+            onTap: () {
+              Navigator.of(context).pushNamed(NewsDetailScreen.id, arguments: {
+                "heading": heading,
+                "description": description,
+                "date": date.toString(),
+                "imageLink": imageLink,
+              });
+            },
           ),
         ),
       ),

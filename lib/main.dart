@@ -8,6 +8,7 @@ import './screens/registration.dart';
 import './screens/login.dart';
 import './constants/const_colors.dart';
 import './screens/home.dart';
+import './screens/news_detail_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         Login.id: (ctx) => Login(),
         Registration.id: (ctx) => Registration(),
         Home.id: (ctx) => Home(),
-        // OtpScreen.id: (ctx) => OtpScreen(),6
+        // OtpScreen.id: (ctx) => OtpScreen(),
+        NewsDetailScreen.id: (ctx) => NewsDetailScreen(),
       },
     );
   }

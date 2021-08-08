@@ -3,7 +3,7 @@ import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class OtpSlotBook extends StatefulWidget {
-  String? mobileNumber;
+  final String? mobileNumber;
 
   OtpSlotBook(this.mobileNumber);
 
@@ -15,18 +15,13 @@ class _OtpSlotBookState extends State<OtpSlotBook> {
   String? _verificationCode;
   final FocusNode _pinPutFocusNode = FocusNode();
   final TextEditingController _pinPutController = TextEditingController();
-  bool otpVerified = false;
 
   void _verifyMobileNumber(BuildContext context) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91${widget.mobileNumber}',
       verificationCompleted: (credential) async {
         try {
-          await FirebaseAuth.instance.currentUser!
-              .updatePhoneNumber(credential)
-              .then((_) async {
-            Navigator.of(context).pop(true);
-          });
+          Navigator.of(context).pop(true);
         } catch (error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -37,8 +32,7 @@ class _OtpSlotBookState extends State<OtpSlotBook> {
         }
       },
       verificationFailed: (error) {
-        print(error);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
       },
       codeSent: (verificationId, resendToken) {
         setState(() {
@@ -61,19 +55,11 @@ class _OtpSlotBookState extends State<OtpSlotBook> {
     );
   }
 
-  Future<void> _onSubmit() async {
+  Future<void> _onSubmit(context) async {
     try {
+      //TODO REMOVE
       print(_verificationCode);
-      await FirebaseAuth.instance.currentUser!
-          .updatePhoneNumber(
-            PhoneAuthProvider.credential(
-              smsCode: _pinPutController.text,
-              verificationId: this._verificationCode!,
-            ),
-          )
-          .then((_) => setState(() {
-                otpVerified = true;
-              }));
+      Navigator.of(context).pop(true);
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -100,67 +86,58 @@ class _OtpSlotBookState extends State<OtpSlotBook> {
 
   @override
   Widget build(BuildContext context) {
-    return otpVerified
-        ? Center(
-            child: Column(
-              children: [
-                Text("done"),
-                ElevatedButton(
-                  child: Text("Go back"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Otp Verification"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+              child: Text(
+                "Please enter your OTP for +91${this.widget.mobileNumber} : ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
-              ],
+              ),
             ),
-          )
-        : SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-                  child: Text(
-                    "Please enter your OTP for +91${this.widget.mobileNumber} : ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.only(top: 50, left: 40, right: 40),
+              child: SizedBox(
+                height: 50,
+                child: PinPut(
+                  fieldsCount: 6,
+                  focusNode: _pinPutFocusNode,
+                  controller: _pinPutController,
+                  submittedFieldDecoration: _pinPutDecoration.copyWith(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  selectedFieldDecoration: _pinPutDecoration,
+                  followingFieldDecoration: _pinPutDecoration.copyWith(
+                    borderRadius: BorderRadius.circular(7.0),
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  autofocus: true,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 40, right: 40),
-                  child: SizedBox(
-                    height: 50,
-                    child: PinPut(
-                      fieldsCount: 6,
-                      focusNode: _pinPutFocusNode,
-                      controller: _pinPutController,
-                      submittedFieldDecoration: _pinPutDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      selectedFieldDecoration: _pinPutDecoration,
-                      followingFieldDecoration: _pinPutDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(7.0),
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      autofocus: true,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ElevatedButton(
-                    child: const Text("Submit"),
-                    onPressed: () {
-                      _onSubmit();
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          );
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: ElevatedButton(
+                child: const Text("Submit"),
+                onPressed: () {
+                  _onSubmit(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

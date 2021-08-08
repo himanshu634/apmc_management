@@ -8,6 +8,8 @@ import '../widgets/navigation_bar/slot_booking_bar.dart';
 import '../widgets/navigation_bar/user_bar.dart';
 import '../providers/news.dart';
 import '../providers/user_data.dart';
+import '../providers/slot_booking.dart';
+import '../screens/news_detail_screen.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
@@ -43,6 +45,9 @@ class _HomeState extends State<Home> {
           ),
           ChangeNotifierProvider(
             create: (ctx) => UserData(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => SlotBooking(),
           ),
         ],
         child: screens[_currentIndex],
@@ -93,7 +98,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-     
     );
   }
 }
