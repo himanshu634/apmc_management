@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import './registration.dart';
 import 'otp_screens/otp_screen_login.dart';
@@ -93,7 +92,6 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: _onSubmit,
                   child: const Text("Get OTP"),
-                  // ()=> Navigator.of(context).pushReplacementNamed(Home.id)
                 ),
               ),
             ),

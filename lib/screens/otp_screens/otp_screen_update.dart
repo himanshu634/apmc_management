@@ -101,7 +101,7 @@ class _OtpScreenUpdateState extends State<OtpScreenUpdate> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text("OTP Verification"),
+        title: const Text("OTP Verification"),
       ),
       body: SingleChildScrollView(
         child: Column(

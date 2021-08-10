@@ -16,10 +16,7 @@ class NewsDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8),
-            //   child: Text(data['date']!),
-            // ),
+           
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 10),
               child: Container(

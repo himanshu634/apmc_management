@@ -14,7 +14,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
   String? _personName = '';
   final FocusNode _villageFocus = FocusNode();
   final FocusNode _numberFocus = FocusNode();
-  // var _isSubmitting = false;
   var _isValid = false;
 
   void _onSubmit() {
@@ -45,12 +44,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   _villageFocus = FocusNode();
-  //   _numberFocus = FocusNode();
-  //   super.initState();
-  // }
+  
 
   @override
   void dispose() {
@@ -105,7 +99,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
             },
             textInputAction: TextInputAction.next,
             focusNode: _villageFocus,
-            // autovalidateMode:
             validator: (value) {
               if (value == null)
                 return "Your village should not empty";
@@ -188,7 +181,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).primaryColor,
               onSurface: Colors.black,
-              // animationDuration: Duration(seconds: 5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),
               ),

@@ -88,7 +88,7 @@ class _OtpSlotBookState extends State<OtpSlotBook> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Otp Verification"),
+        title: const Text("Otp Verification"),
       ),
       body: SingleChildScrollView(
         child: Column(

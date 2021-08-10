@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-// import '../screens/home.dart';
 import '../widgets/registration_form.dart';
-
-// import '../constants/const_colors.dart';
 
 class Registration extends StatelessWidget {
   static const id = '/registration';

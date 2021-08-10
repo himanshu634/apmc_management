@@ -17,7 +17,7 @@ class SlotBooking with ChangeNotifier {
       await dbInst
           .collection('booking_data')
           .doc(commodityName)
-          .collection(authInst.currentUser!.uid)
+          .collection(mobileNumber)
           .add({
         "name": name,
         "commodity_name": commodityName,
@@ -25,6 +25,7 @@ class SlotBooking with ChangeNotifier {
         "date": date.toIso8601String(),
         "aadhar_number": aadharNumber,
         "mobile_number": mobileNumber,
+        'user_id': authInst.currentUser!.uid,
       });
     } catch (error) {
       //TODO remove this

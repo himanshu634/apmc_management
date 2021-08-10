@@ -39,12 +39,7 @@ class NewsBar extends StatelessWidget {
           },
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     newsData.fetchAndSetData();
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
+      
     );
   }
 }

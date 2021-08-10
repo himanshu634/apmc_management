@@ -1,15 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
 class CommodityDetail with ChangeNotifier {
-  List<Map<String, dynamic>> _items = [
-    // {
-    //   'name': 'Dhana',
-    //   'start_date': DateTime.now(),
-    //   'end_date': DateTime(2021, 7, 7),
-    // },
-  ];
+  List<Map<String, dynamic>> _items = [];
 
   List<Map<String, dynamic>> get items {
     return [..._items];
