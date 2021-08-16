@@ -16,22 +16,69 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
+    final userData = Provider.of<UserData>(context, listen: true);
     File? _image;
 
     Future<void> _pickImage() async {
       try {
-        final picker = ImagePicker();
-        final pickedFile = await picker.pickImage(
-          source: ImageSource.camera,
-          maxHeight: 300,
-          maxWidth: 500,
+        //TODO  some improvements are pending
+        showModalBottomSheet(
+          context: context,
+          builder: (ctx) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  TextButton(
+                    child: const Text("Take Picture"),
+                    onPressed: () async {
+                      final picker = ImagePicker();
+                      final pickedFile = await picker.pickImage(
+                        source: ImageSource.camera,
+                        maxHeight: 300,
+                        maxWidth: 500,
+                      );
+                      Navigator.of(context).pop();
+                      if (pickedFile != null) {
+                        setState(() {
+                          _image = File(pickedFile.path);
+                        });
+                        await userData.addPhoto(_image!);
+                      }
+                    },
+                  ),
+                  const Divider(thickness: 2),
+                  TextButton(
+                    child: const Text("Choose From Gallery"),
+                    onPressed: () async {
+                      final picker = ImagePicker();
+                      final pickedFile = await picker.pickImage(
+                        source: ImageSource.gallery,
+                        maxHeight: 300,
+                        maxWidth: 500,
+                      );
+                      Navigator.of(context).pop();
+                      if (pickedFile != null) {
+                        _image = File(pickedFile.path);
+                        await userData.addPhoto(_image!);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            );
+          },
+          shape: const RoundedRectangleBorder(
+            borderRadius: const BorderRadius.only(
+              topLeft: const Radius.circular(20),
+              topRight: const Radius.circular(20),
+            ),
+          ),
+          elevation: 10,
         );
-        if (pickedFile != null) {
-          _image = File(pickedFile.path);
-          await userData.addPhoto(_image!);
-        }
       } catch (error) {
+        //TODO remove this and add snackbar
         print(error);
       }
     }
@@ -42,7 +89,7 @@ class _UserDetailsState extends State<UserDetails> {
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: const CircularProgressIndicator(),
             );
           }
           if (snapshot.hasData) {
@@ -58,7 +105,7 @@ class _UserDetailsState extends State<UserDetails> {
                         const SizedBox(height: 20),
                         Center(
                           child: imageLink == null
-                              ? CircleAvatar(
+                              ? const CircleAvatar(
                                   minRadius: 50,
                                   maxRadius: 70,
                                   child: const Icon(
@@ -66,11 +113,12 @@ class _UserDetailsState extends State<UserDetails> {
                                     size: 50,
                                   ),
                                 )
-                              : ImageWidget(imageLink),
+                              : ImageWidget(
+                                  imageLink: imageLink, image: _image),
                         ),
                         const SizedBox(height: 20),
                         ElevatedButton(
-                          child: Text("Take Photo"),
+                          child: const Text("Choose Picture"),
                           onPressed: _pickImage,
                         ),
                       ],

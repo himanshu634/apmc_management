@@ -6,7 +6,8 @@ import 'package:path_provider/path_provider.dart' as pp;
 
 class ImageWidget extends StatefulWidget {
   final String imageLink;
-  const ImageWidget(this.imageLink);
+  final File? image;
+  const ImageWidget({required this.imageLink, this.image});
   @override
   _ImageWidgetState createState() => _ImageWidgetState();
 }
@@ -14,7 +15,7 @@ class ImageWidget extends StatefulWidget {
 class _ImageWidgetState extends State<ImageWidget> {
   Directory? dir;
   double _percentage = 0;
-  File? _imageFile;
+  File? _imageFile ;
   bool _imageExists = false;
 
   Future<void> _downloadImage() async {
@@ -37,17 +38,32 @@ class _ImageWidgetState extends State<ImageWidget> {
         },
       );
     } catch (error) {
-      //TODO remove it
-      print(error.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.toString(),
+            style: TextStyle(
+              color: Theme.of(context).errorColor,
+            ),
+          ),
+        ),
+      );
     }
   }
 
   @override
   void initState() {
+    if (widget.image == null) {
+      Future.delayed(Duration()).then((_) {
+        _downloadImage();
+      });
+    } else {
+      setState(() {
+        _imageExists = true;
+        _imageFile = widget.image;
+      });
+    }
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      await _downloadImage();
-    });
   }
 
   @override
@@ -69,9 +85,7 @@ class _ImageWidgetState extends State<ImageWidget> {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: FileImage(
-                    this._imageFile!,
-                  ),
+                  image: FileImage(_imageFile!),
                 ),
               ),
             ),
