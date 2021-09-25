@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../news_item.dart';
+import '../news_widget/news_item.dart';
 import '../../providers/news.dart' show News;
 
 class NewsBar extends StatelessWidget {

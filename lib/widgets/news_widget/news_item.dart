@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../screens/news_detail_screen.dart';
+import '../../screens/news_detail_screen.dart';
 
 class NewsItem extends StatelessWidget {
   final String heading;

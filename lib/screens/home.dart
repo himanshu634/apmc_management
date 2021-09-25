@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/navigation_bar/news_bar.dart';
-import '../widgets/navigation_bar/price_list_bar.dart';
 import '../widgets/navigation_bar/slot_booking_bar.dart';
 import '../widgets/navigation_bar/user_bar.dart';
 import '../providers/news.dart';
@@ -18,7 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var screens = [NewsBar(), PriceListBar(), SlotBookingBar(), UserBar()];
+  var screens = [NewsBar(), SlotBookingBar(), UserBar()];
   var _currentIndex = 0;
 
   @override
@@ -31,7 +30,7 @@ class _HomeState extends State<Home> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.signOut(); 
             },
           ),
         ],
@@ -81,10 +80,6 @@ class _HomeState extends State<Home> {
                 Icons.article,
               ),
               label: "News",
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.yard_rounded),
-              label: "Prices",
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.receipt_long_rounded),
