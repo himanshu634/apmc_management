@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/screens/home.dart';
 
 import './registration.dart';
 import 'otp_screens/otp_screen_login.dart';
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) =>
-              OtpScreenLogin(mobileNumber: _numberEditingController.text),
+          OtpScreenLogin(mobileNumber: _numberEditingController.text),
         ),
       );
     } else {
